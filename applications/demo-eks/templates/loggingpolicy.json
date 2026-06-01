@@ -1,0 +1,23 @@
+{
+    "Statement": [
+        {
+            "Action": [
+                "es:ESHttp*",
+                "s3:ListBucket",
+                "s3:GetObject",
+                "s3:GetBucketLocation",
+                "s3:GetObjectVersion",
+                "s3:GetObjectACL",
+                "s3:PutObject*",
+                "s3:CreateBucket"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:${partition}:s3:::demo-*-app-${region}-${environment_name}-logging",
+                "arn:${partition}:s3:::demo-*-app-${region}-${environment_name}-logging/*"
+            ],
+            "Sid": ""
+        }
+    ],
+    "Version": "2012-10-17"
+}

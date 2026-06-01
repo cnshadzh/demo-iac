@@ -1,0 +1,72 @@
+product_name: renren
+tags:
+  environment_name: "dev"
+  product_name: "renren"
+  resource_owner: "Shad Zhang"
+  terraform_managed: "true"
+  Environment: "dev"
+redis:
+  dev-renren-redis:
+    allowed_security_groups:
+    - sg-0860011ef4255943a	                      # devops-ng-spot-blue
+    - sg-0eaa36e8d11e0a979	                      # devops-ng-spot-green
+    - sg-0bf816d22f5298536                        # renren-ng-spot-blue
+    - sg-0ed549682caa2a7db                        # renren-ng-spot-green
+    allowed_cidr_blocks:
+    - 172.16.0.0/21
+    cluster_size: null
+    cluster_mode_replicas_per_node_group: 0
+    cluster_mode_num_node_groups: 3
+    instance_type: cache.t3.small
+    engine_version: '7.0'
+    family: redis7
+    automatic_failover_enabled: true
+    cluster_mode_enabled: true
+    transit_encryption_enabled: true
+    at_rest_encryption_enabled: true
+    multi_az_enabled: false
+rds:
+  dev-renren-rds:
+    engine: "mysql"
+    engine_version: "8.0.40"
+    family: "mysql8.0"
+    instance_class: "db.t3.medium"
+    allocated_storage: 300
+    major_engine_version: "8.0"
+    max_allocated_storage: 1000
+    storage_type: "gp3"
+    iops: 3000
+    manage_master_user_password: false
+    multi_az: false
+    performance_insights_enabled: false
+    deletion_protection: true
+    backup_retention_period: 1
+    backup_window: "17:00-18:00"
+    maintenance_window: "wed:18:00-wed:19:00"
+    res_tags:
+      shared_product: "renren"
+    enabled_cloudwatch_logs_exports:
+    - audit
+    - error
+    - general
+    - slowquery
+    allowed_security_groups:
+      - sg-0bf816d22f5298536                        # renren-ng-spot-blue
+      - sg-0ed549682caa2a7db                        # renren-ng-spot-green
+      - sg-0860011ef4255943a	                      # devops-ng-spot-blue
+      - sg-0eaa36e8d11e0a979	                      # devops-ng-spot-green
+    allowed_cidr_blocks:
+    - 172.16.0.0/21                                
+    port: 3306
+    username: "admin"
+    parameters:
+    - name: "character_set_server"
+      value: "utf8mb4"
+    - name: "character_set_client"
+      value: "utf8mb4"
+    - name: "time_zone"
+      value: "Asia/Shanghai"
+    - name: "binlog_format"
+      value: "ROW"
+    - name: "log_output"
+      value: "FILE"

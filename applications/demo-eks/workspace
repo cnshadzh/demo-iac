@@ -1,0 +1,5 @@
+eu-central-1:demo-dev
+eu-central-1:demo-qa
+eu-central-1:demo-perf
+eu-central-1:demo-stg
+eu-central-1:demo-prod

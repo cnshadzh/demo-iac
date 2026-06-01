@@ -1,0 +1,119 @@
+sgs:
+  trusted_whitelist_sg:
+    sg_name: "trusted-whitelist-sg"
+    description: "Whitelist sg for 443, 3389, 22 from trusted source ip"
+    ingress_cidr_blocks:
+      - 101.87.131.151/32 
+  internet_lb_whitelist_sg:
+    sg_name: "internet-lb-whitelist-sg"
+    description: "internet lb whitelist sg for .dev.cce.lego.com 443 from trusted source ips"
+    ingress_cidr_blocks:
+      - 101.87.131.151/32
+  internal_lb_whitelist_sg:
+    sg_name: "internal-lb-whitelist-sg"
+    description: "internal lb whitelist sg"
+    ingress_cidr_blocks:
+      - 172.16.0.0/13 
+eks:
+  cluster_name: dev-demo-eks
+  cluster_version: "1.30"
+  cluster_endpoint_public_access_cidrs:
+    - 101.87.131.151/32 
+  key_name: central-nonprod
+  addon:
+    vpc_cni_version: v1.19.0-eksbuild.1
+    kube_proxy_version: v1.30.6-eksbuild.3
+    coredns_version: v1.11.3-eksbuild.1
+    aws_ebs_csi_driver_version: v1.37.0-eksbuild.2
+    aws_efs_csi_driver_version: v2.1.4-eksbuild.1
+products:
+  devops:
+    tags:
+      Purpose: "devops"
+    logging_s3:
+      expiration_days: 360
+      force_destroy: true
+      glacier_noncurrent_version_transition_days: 60
+      glacier_transition_days: 90
+      lifecycle_rule_enabled: Enabled
+      lifecycle_rule_prefix: ''
+      noncurrent_version_expiration_days: 90
+      standard_ia_transition_days: 60
+      versioning_enabled: false
+    node_groups:
+      ondemand-blue:
+        capacity_type: "ON_DEMAND"
+        max_size: 3
+        min_size: 1
+        desired_size: 1
+        instance_types:
+          - t3.medium
+        labels:
+          environment: "dev"
+          product: "devops"
+          type: "ondemand"
+        additional_tags:
+          k8s.io/cluster-autoscaler/enabled: "TRUE"
+        taints: {}
+      ondemand-green:
+        capacity_type: "ON_DEMAND"
+        max_size: 3
+        min_size: 0
+        desired_size: 0
+        instance_types:
+        - t3.medium
+        labels:
+          environment: "dev"
+          product: "devops"
+          type: "ondemand"
+        additional_tags:
+          k8s.io/cluster-autoscaler/enabled: "TRUE"
+        taints:
+          - key: ScalingStatus
+            value: Inactive
+            effect: NO_SCHEDULE
+  renren:
+    tags:
+      Purpose: "renren"
+    logging_s3:
+      expiration_days: 360
+      force_destroy: true
+      glacier_noncurrent_version_transition_days: 60
+      glacier_transition_days: 90
+      lifecycle_rule_enabled: Enabled
+      lifecycle_rule_prefix: ''
+      noncurrent_version_expiration_days: 90
+      standard_ia_transition_days: 60
+      versioning_enabled: false
+    node_groups:
+      spot-blue:
+        capacity_type: "SPOT"
+        max_size: 20
+        min_size: 1
+        desired_size: 3
+        instance_types:
+          - t3.medium
+        labels:
+          environment: "dev"
+          product: "renren"
+          type: "spot"
+        additional_tags:
+          k8s.io/cluster-autoscaler/enabled: "TRUE"
+        taints: {}
+      spot-green:
+        capacity_type: "SPOT"
+        max_size: 20
+        min_size: 0
+        desired_size: 0
+        instance_types:
+          - t3.medium
+        labels:
+          environment: "dev"
+          product: "renren"
+          type: "spot"
+        additional_tags:
+          k8s.io/cluster-autoscaler/enabled: "TRUE"
+        taints:
+          - key: ScalingStatus
+            value: Inactive
+            effect: NO_SCHEDULE
