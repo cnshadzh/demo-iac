@@ -1,33 +1,33 @@
 ####  Define application's configurations
 workload_account:
   account_id: '984601295324'
-  environment: 'dev'
+  environment: 'qa'
   region: 'eu-central-1'
   tags:
-    Environment: "dev"
+    Environment: "qa"
     ManagedWith: "Terraform"
     Owner: "Shad Zhang"
     Product: "demo"
   vpc:
     vpc_id: vpc-0892a97c16bd1e930
-    cidr: 172.16.0.0/21
-    name: dev-demo-vpc
+    cidr: 172.16.8.0/21
+    name: qa-demo-vpc
     azs:
       - eu-central-1a
       - eu-central-1bt
       - eu-central-1c
     private_subnets:
-      - 172.16.4.0/24
-      - 172.16.5.0/24
-      - 172.16.6.0/24
+      - 172.16.12.0/24
+      - 172.16.13.0/24
+      - 172.16.14.0/24
     public_subnets:
-      - 172.16.0.0/25
-      - 172.16.0.128/25
-      - 172.16.1.0/25
+      - 172.16.8.0/25
+      - 172.16.8.128/25
+      - 172.16.9.0/25
     protected_subnets:
-      - 172.16.2.0/25
-      - 172.16.2.128/25
-      - 172.16.3.0/25
+      - 172.16.10.0/25
+      - 172.16.10.128/25
+      - 172.16.11.0/25
     enable_nat_gateway: true
     single_nat_gateway: false
     enable_dns_hostnames: true

@@ -1,17 +1,17 @@
 ####  Define application's configurations
 workload_account:
   account_id: '984601295324'
-  environment: 'dev'
+  environment: 'perf'
   region: 'eu-central-1'
   tags:
-    Environment: "dev"
+    Environment: "perf"
     ManagedWith: "Terraform"
     Owner: "Shad Zhang"
     Product: "demo"
   vpc:
     vpc_id: 
     cidr: 172.16.16.0/21
-    name: dev-demo-vpc
+    name: perf-demo-vpc
     azs:
       - eu-central-1a
       - eu-central-1bt
